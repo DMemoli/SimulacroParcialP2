@@ -40,23 +40,20 @@ public class Modelo {
                 this.resultadoEst.setSiguiente(rs.getString(2));
                 this.resultadoEst.setAnterior(rs.getString(3));
                 this.resultadoEst.setComentario(rs.getString(4));
-                            }
+                System.out.println(resultadoEst.getAnterior());            }
             con.close();
 
         } catch (SQLException e) {
             reportException(e.getMessage());
         }
     }
-    public String estacionSiguiente(){
-        String siguiente = null;
+    public void estacionSiguiente(){
+
         try {
             Connection con = DriverManager.getConnection(urlRoot + dbName, "", "");
             Statement stmt = con.createStatement();
-            if(resultadoEst.getSiguiente()=="No hay"){
-                stmt.execute("SELECT * FROM subte_b.estaciones WHERE Actual=\""+resultadoEst.getAnterior()+"\";");
-            }else {
-                stmt.execute("SELECT * FROM subte_b.estaciones WHERE Actual=\"" + resultadoEst.getSiguiente() + "\";");
-            }
+            stmt.execute("SELECT * FROM subte_b.estaciones WHERE Actual=\"" + resultadoEst.getSiguiente() + "\";");
+
             ResultSet rs = stmt.getResultSet();
 
             while (rs.next()) {
@@ -64,7 +61,10 @@ public class Modelo {
                 this.resultadoEst.setSiguiente(rs.getString(2));
                 this.resultadoEst.setAnterior(rs.getString(3));
                 this.resultadoEst.setComentario(rs.getString(4));
-                siguiente=rs.getString(1);
+                if(resultadoEst.getSiguiente().equalsIgnoreCase("No hay")) {
+                resultadoEst.setVuelve(true);
+                }
+                ;
             }
             con.close();
 
@@ -72,25 +72,35 @@ public class Modelo {
             reportException(e.getMessage());
         }
 
-        return siguiente;
+
     }
     public void estacionAnterior(){
 
         try {
             Connection con = DriverManager.getConnection(urlRoot + dbName, "", "");
             Statement stmt = con.createStatement();
-            stmt.execute("SELECT * FROM subte_b.estaciones LIMIT 1;");
+            stmt.execute("SELECT * FROM subte_b.estaciones WHERE Actual=\"" + resultadoEst.getAnterior() + "\";");
+
             ResultSet rs = stmt.getResultSet();
 
             while (rs.next()) {
                 this.resultadoEst.setActual(rs.getString(1));
+                this.resultadoEst.setSiguiente(rs.getString(2));
+                this.resultadoEst.setAnterior(rs.getString(3));
                 this.resultadoEst.setComentario(rs.getString(4));
+                if(resultadoEst.getAnterior().equalsIgnoreCase("No hay")) {
+                    resultadoEst.setVuelve(false);
+                }
+
+                ;
             }
             con.close();
 
         } catch (SQLException e) {
             reportException(e.getMessage());
         }
+
+
     }
 
     public Estacion getResultadoEst(){

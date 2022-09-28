@@ -14,7 +14,7 @@ public class Controlador {
     }
 
     public void ejecutar() {
-
+        m.primerEstacion();
         v.botonAvanzar(new AvanzarListener());
 
     }

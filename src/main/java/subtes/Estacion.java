@@ -6,6 +6,8 @@ public class Estacion {
     private String anterior;
     private String comentario;
 
+    private boolean vuelve;
+
     public String getAnterior() {
         return anterior;
     }
@@ -15,13 +17,15 @@ public class Estacion {
     }
 
     public Estacion() {
-
+        vuelve = false;
     }
 
-    public Estacion(String actual, String comentario) {
-        this.actual = actual;
+    public boolean isVuelve() {
+        return vuelve;
+    }
 
-        this.comentario = comentario;
+    public void setVuelve(boolean vuelve) {
+        this.vuelve = vuelve;
     }
 
     public String getSiguiente() {

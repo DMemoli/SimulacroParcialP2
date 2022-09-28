@@ -36,7 +36,13 @@ public class Vista {
         boton.addActionListener(av);
     }
     public void actualizar(){
-        estacionActual.setText(m.estacionSiguiente());
+        if(m.getResultadoEst().isVuelve()){
+            m.estacionAnterior();
+        }else {
+            m.estacionSiguiente();
+        }
+
+        estacionActual.setText(m.getResultadoEst().getActual());
         comentario.setText(m.getResultadoEst().getComentario());
 
     }

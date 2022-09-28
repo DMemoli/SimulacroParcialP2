@@ -8,10 +8,8 @@ public class Main {
         String bd = "subte_b";
         Modelo m = new Modelo(ip, bd);
 
-        m.primerEstacion();
 
-        System.out.println(m.getResultadoEst());
-        System.out.println(m.estacionSiguiente());
+
         Vista v = new Vista(m);
 
         Controlador c = new Controlador(m, v);
